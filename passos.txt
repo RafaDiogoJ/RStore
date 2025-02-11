@@ -1,0 +1,23 @@
+Logar no git:
+git config --global user.name RafaDiogoJ
+git config --global user.email rafabbta@hotmail.com
+
+Criar nova solução (agrupador de projetos) e Criação do projeto:
+dotnet new sln --name RStore
+dotnet new mvc -o RStore
+dotnet sln add RStore\RStore.csproj
+
+cd RStore
+
+dotnet watch run (watch serve para ver as atualizações do site em tempo real)
+
+Instalar os pacotes:
+EntityFrameworkCore serve para manipulação do banco
+
+dotnet add package Microsoft.EntityFrameworkCore --version 9.0.1 
+dotnet add package Microsoft.EntityFrameworkCore.Design --version 9.0.1
+dotnet add package Microsoft.EntityFrameworkCore.Tools --version 9.0.1
+dotnet add package Microsoft.AspNetCore.Identity.EntityFrameworkCore --version 9.0.1
+dotnet add package MySql.EntityFrameworkCore --version 9.0.0
+
+Criar a camada de dados (Criar as classes na models):
