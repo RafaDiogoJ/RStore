@@ -1,8 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Google.Protobuf;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Mysqlx;
 
 namespace RStore.Models;
 
@@ -29,7 +27,7 @@ public class Produto
     [Display(Name ="Quantidade em estoque")]
     [Required(ErrorMessage = "Por favor, indique a quantidade em estoque")]
     [Range(0, int.MaxValue)]
-    public int QtdEstoque { get; set; }
+    public int QtdeEstoque { get; set; }
     
     [Display(Name ="Valor de Custo")]
     [Range(0, double.MaxValue)]
@@ -42,4 +40,9 @@ public class Produto
     [Required(ErrorMessage ="Insira o valor de Venda")]
     [Column(TypeName ="decimal(10.2)")]
     public decimal ValorVenda { get; set; }
+
+    public bool Destaque { get; set; } = false;
+
+    public List<ProdutoFoto> Fotos { get; set; }
+
 }
