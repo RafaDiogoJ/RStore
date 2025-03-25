@@ -60,17 +60,18 @@ namespace RStore.Controllers
 
                 if(Arquivo != null)
                 {
-                    string nomeArquivo =  categoria.Id + Path.GetExtension(Arquivo.FileName);
+                    string filename =  categoria.Id + Path.GetExtension(Arquivo.FileName);
                     string caminho  = Path.Combine(_host.WebRootPath, "img\\categorias");
-                    string novoArquivo = Path.Combine(caminho, nomeArquivo);
+                    string novoArquivo = Path.Combine(caminho, filename);
                     using (FileStream stream = new FileStream(novoArquivo, FileMode.Create))
                     {
                         Arquivo.CopyTo(stream);
                     }
-                    categoria.Foto = "\\img\\categorias\\"+ nomeArquivo;
+                    categoria.Foto = "\\img\\categorias\\"+ filename;
                     await _context.SaveChangesAsync();
-                }
 
+                }
+                TempData["Success"] = "Categoria Cadastrada com Sucesso!";
                 return RedirectToAction(nameof(Index));
             }
             return View(categoria);
@@ -97,7 +98,7 @@ namespace RStore.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Foto")] Categoria categoria)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Foto")] Categoria categoria, IFormFile Arquivo)
         {
             if (id != categoria.Id)
             {
@@ -106,8 +107,19 @@ namespace RStore.Controllers
 
             if (ModelState.IsValid)
             {
-                try
+                try 
                 {
+                    if (Arquivo != null)
+                    {
+                        string filename = categoria.Id + Path.GetExtension(Arquivo.FileName);
+                        string caminho = Path.Combine(_host.WebRootPath, "img\\categorias");
+                        string novoArquivo = Path.Combine(caminho, filename);
+                        using (var stream = new FileStream(novoArquivo, FileMode.Create))
+                        {
+                            Arquivo.CopyTo(stream);
+                        }
+                        categoria.Foto = "\\img\\categorias\\" + filename;
+                    }
                     _context.Update(categoria);
                     await _context.SaveChangesAsync();
                 }
@@ -122,12 +134,13 @@ namespace RStore.Controllers
                         throw;
                     }
                 }
+                TempData["Success"] = "Categoria Alterada com Sucesso!";
                 return RedirectToAction(nameof(Index));
             }
             return View(categoria);
         }
 
-        // GET: Categorias/Delete/5
+        //GET: Categorias\Delete\5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -145,7 +158,7 @@ namespace RStore.Controllers
             return View(categoria);
         }
 
-        // POST: Categorias/Delete/5
+        //Post: Categorias/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -157,6 +170,7 @@ namespace RStore.Controllers
             }
 
             await _context.SaveChangesAsync();
+            TempData["Success"] = "Categoria Excluída com Sucesso!";
             return RedirectToAction(nameof(Index));
         }
 
