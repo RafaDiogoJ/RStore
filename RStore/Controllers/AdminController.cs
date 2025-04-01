@@ -1,13 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
-namespace RStore.Controllers
-{
+
+namespace RStore.Controllers;
+
+[Authorize(Roles ="Administrador")]
     public class AdminController : Controller
     {
         private readonly ILogger<AdminController> _logger;
@@ -28,4 +25,3 @@ namespace RStore.Controllers
             return View("Error!");
         }
     }
-}
