@@ -15,7 +15,7 @@ namespace RStore.ViewModels
         [Display(Name ="Senha de acesso", Prompt ="********")]
         [Required(ErrorMessage ="Por favor, infomre sua senha")]
         [DataType(DataType.Password)]
-        public sbyte Senha { get; set; }
+        public string Senha { get; set; }
 
         [Display(Name ="Manter Conectado?")]
         public bool Lembrar { get; set; }
